@@ -1,0 +1,47 @@
+i {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-position: center;
+  background-size: contain;
+}
+
+i.add-circle {
+  background-image: url("../assets/ic_add_circle.svg");
+}
+
+i.add-circle-fill {
+  background-image: url("../assets/ic_add_circle_fill.svg");
+}
+
+i.arrow-dropdown {
+  background-image: url("../assets/ic_arrow_dropdown.svg");
+}
+
+i.checkbox {
+  background-image: url("../assets/ic_check_box__blank.svg");
+}
+
+i.checkbox-fill {
+  background-image: url("../assets/ic_check_box__fill.svg");
+}
+
+i.check {
+  background-image: url("../assets/ic_check.svg");
+}
+
+i.close {
+  background-image: url("../assets/ic_close.svg");
+}
+
+i.home {
+  background-image: url("../assets/ic_home.svg");
+}
+
+i.more {
+  background-image: url("../assets/ic_more.svg");
+}
+
+i.person {
+  background-image: url("../assets/ic_person.svg");
+}

@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  height: auto;
+}
+
+textarea {
+  appearance: none;
+  border: none;
+  outline: none;
+  resize: none;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+.input,
+.name {
+  width: 100%;
+  margin: auto 0;
+  font-size: 12px;
+  font-weight: 300;
+}

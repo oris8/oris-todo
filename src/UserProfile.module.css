@@ -1,0 +1,53 @@
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 400px;
+  height: 100px;
+}
+
+.imageLabel {
+  position: relative;
+
+  img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+  }
+  input {
+    display: none;
+  }
+
+  button {
+    position: absolute;
+    bottom: 0;
+    right: 4px;
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: white;
+  }
+}
+
+.userName,
+.userNameInput {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.userNameInput {
+  font-weight: 400;
+}
+
+.userBio,
+.userBioInput {
+  margin-top: 12px;
+  font-size: 0.75rem;
+  font-weight: 200;
+  color: var(--color-cool-gray-600);
+}
+
+.userBioInput {
+  font-weight: 100;
+}
