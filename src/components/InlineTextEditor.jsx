@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./InlineTextEditor.module.css";
 
 const InlineTextEditor = ({ name, onChange, ...data }) => {
@@ -9,9 +9,17 @@ const InlineTextEditor = ({ name, onChange, ...data }) => {
   const textarea = useRef();
 
   const handleResizeHeight = () => {
+    // console.log(textarea);
     textarea.current.style.height = "auto"; //height 초기화
     textarea.current.style.height = textarea.current.scrollHeight + "px";
   };
+
+  //r공부
+  useEffect(() => {
+    if (textarea.current && isDoubleClicked) {
+      handleResizeHeight();
+    }
+  }, [isDoubleClicked]);
 
   const handleToggleBtn = () => {
     setIsShowAll((prevState) => !prevState);
@@ -43,7 +51,7 @@ const InlineTextEditor = ({ name, onChange, ...data }) => {
           <textarea
             type="text"
             name={name}
-            value={inputValue}
+            value={inputValue || data.todo.text}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             className={styles.input}

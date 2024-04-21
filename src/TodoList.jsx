@@ -4,36 +4,16 @@ import moment from "moment";
 import TodoListItem from "./TodoListItem";
 import { nanoid } from "nanoid";
 import styles from "./TodoList.module.css";
+import { deleteData, postData, updateData } from "./api/api";
 
-const mockDate = [
-  {
-    id: nanoid(),
-    text: "Todo 1 \n #무조건 #미뤄도됨 #코드잇",
-    date: "2024-04-20",
-    tags: [],
-  },
-  {
-    id: nanoid(),
-    text: "Todo 2",
-    date: "2024-04-21",
-    tags: ["개인프로젝트"],
-  },
-  {
-    id: nanoid(),
-    text: "Todo 3",
-    date: "2024-04-20",
-    tags: [],
-  },
-  {
-    id: nanoid(),
-    text: "Todo 4",
-    date: "2024-04-22",
-    tags: ["미뤄도됨"],
-  },
-];
+const TodoList = ({ data }) => {
+  const [todos, setTodos] = useState([]);
 
-const TodoList = () => {
-  const [todos, setTodos] = useState(mockDate);
+  useEffect(() => {
+    setTodos(data);
+  }, [data]);
+
+  // console.log(todos);
 
   const { currentDate, setCurrentDate, selectedDate, setSelectedDate } =
     useContext(DateContext);
@@ -44,15 +24,19 @@ const TodoList = () => {
 
   const handleClickAddBtn = () => {
     const newTodo = {
-      id: nanoid(),
+      _id: nanoid(),
       text: "할 일을 입력해주세요",
       date: formattedSelectedDate,
+      tags: [],
     };
+    postData("todos", newTodo);
     setTodos([...todos, newTodo]);
   };
 
   const handleClickDeleteBtn = (id) => {
-    const newTodos = todos.filter((todo) => todo.id !== id);
+    console.log(id);
+    const newTodos = todos.filter((todo) => todo._id !== id);
+    deleteData("todos", id);
     setTodos(newTodos);
   };
 
@@ -65,11 +49,13 @@ const TodoList = () => {
 
     const trimValue = value.replace(/#[^\s#]+/g, "").trim();
 
+    const updatedTodo = { ...currTodo, text: trimValue, tags: tagsArray };
+
     const updatedTodos = todos.map((todo) =>
-      todo.id === currTodo.id
-        ? { ...todo, text: trimValue, tags: tagsArray }
-        : todo
+      todo._id === currTodo._id ? updatedTodo : todo
     );
+
+    updateData("todos", updatedTodo);
     setTodos(updatedTodos);
   };
 
@@ -84,7 +70,7 @@ const TodoList = () => {
       <div className={styles.todosWrapper}>
         {sortedTodos.map((todo) => (
           <TodoListItem
-            key={todo.id}
+            key={todo._id}
             todo={todo}
             onDelete={handleClickDeleteBtn}
             setUpdateTodoText={setUpdateTodoText}

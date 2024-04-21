@@ -7,7 +7,7 @@ const TodoListItem = ({ todo, onDelete, setUpdateTodoText }) => {
   const [isFinished, setIsFinished] = useState(false);
 
   const handleClickDeleteBtn = () => {
-    onDelete(todo.id);
+    onDelete(todo._id);
   };
 
   const handleClickCheckBox = () => {
