@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./UserProfile.module.css";
 
 import MOCK_IMAGE from "./assets/mock_user.jpeg";
+import ImageInput from "./components/ImageInput";
 
 const INIT_CLICK_STATE = {
   name: false,
@@ -25,18 +26,6 @@ const UserProfile = () => {
       [type]: value,
     }));
   };
-  const handleImageUpload = () => {
-    const input = document.querySelector("input[type='file']");
-    const file = input.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      setProfile((prevProfile) => ({
-        ...prevProfile,
-        image: reader.result,
-      }));
-    };
-    reader.readAsDataURL(file);
-  };
 
   const handleDoubleClick = (e) => {
     const type = e.target.parentNode.className;
@@ -52,18 +41,14 @@ const UserProfile = () => {
 
   return (
     <div className={styles.userProfile}>
-      <label htmlFor="image" className={styles.imageLabel}>
-        <img src={profile["image"]} alt="User Image" />
-        <button>
-          <i className="add-circle-fill"></i>
-        </button>
-        <input
-          type="file"
-          id="image"
-          name="image"
-          onChange={handleImageUpload}
-        />
-      </label>
+      <ImageInput
+        className={styles.profileImage}
+        src={profile["image"]}
+        alt="User Image"
+        showAddBtn={true}
+        setState={setProfile}
+        label="userImage"
+      />
 
       <div>
         <div className="name">

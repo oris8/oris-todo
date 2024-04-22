@@ -6,6 +6,7 @@ import UserProfile from "./UserProfile";
 import TodoList from "./TodoList";
 
 import "./App.css";
+import { fetchData } from "./api/api";
 
 export const DateContext = createContext();
 
@@ -15,18 +16,9 @@ function App() {
 
   const [data, setData] = useState([]);
 
+  const [showPage, setShowPage] = useState(false);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/todos");
-        setData(response.data);
-        // console.dir(response.data);
-      } catch (error) {
-        console.error("데이터를 가져오는 동안 오류가 발생했습니다:", error);
-      }
-    };
-
-    fetchData();
+    fetchData(setData, "todos");
   }, []);
 
   return (
@@ -39,7 +31,7 @@ function App() {
           <TodoCalendar />
         </div>
         <div>
-          <TodoList data={data} />
+          <TodoList data={data} showPage={showPage} setShowPage={setShowPage} />
         </div>
       </div>
     </DateContext.Provider>

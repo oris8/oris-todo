@@ -22,3 +22,15 @@
   flex-direction: column;
   gap: 16px;
 }
+
+.todoPageWrapper {
+  position: absolute;
+  top: 150px;
+  right: 0;
+}
+
+.todoPageWrapper > div {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

@@ -1,5 +1,14 @@
 import axios from "axios";
 
+export async function fetchData(setFunction, link) {
+  try {
+    const response = await axios.get(`http://localhost:5000/api/${link}`);
+    setFunction(response.data);
+  } catch (error) {
+    console.error("데이터를 가져오는 동안 오류가 발생했습니다:", error);
+  }
+}
+
 // data는 객체형식
 export async function postData(link, data) {
   try {
@@ -41,5 +50,25 @@ export async function deleteData(link, id) {
     console.dir(response.data);
   } catch (error) {
     console.error("데이터를 삭제하는 동안 오류가 발생했습니다:", error);
+  }
+}
+
+export async function uploadArrayFile(files, key, link) {
+  const formData = new FormData();
+  files.map((file) => {
+    formData.append({ key }, file);
+  });
+
+  console.log(formData);
+
+  try {
+    const response = await axios.post(
+      `http://localhost:5000/api/${link}`,
+      formData
+    );
+
+    console.dir(response.data);
+  } catch (error) {
+    console.error("데이터를 파일 전송하는 중 오류가 발생했습니다:", error);
   }
 }

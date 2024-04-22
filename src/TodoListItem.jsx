@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import InlineTextEditor from "./components/InlineTextEditor";
 import styles from "./TodoListItem.module.css";
 import Label from "./components/Label";
+import { updateData } from "./api/api";
 
-const TodoListItem = ({ todo, onDelete, setUpdateTodoText }) => {
+const TodoListItem = ({ todo, onDelete, setShowPage, setUpdateTodoText }) => {
   const [isFinished, setIsFinished] = useState(false);
 
   const handleClickDeleteBtn = () => {
@@ -15,6 +16,14 @@ const TodoListItem = ({ todo, onDelete, setUpdateTodoText }) => {
   };
 
   const tags = todo.tags;
+
+  const updateTodo = (todo) => {
+    updateData("todos", todo);
+  };
+
+  const handleClickPageBtn = () => {
+    setShowPage(true);
+  };
 
   return (
     <>
@@ -32,9 +41,13 @@ const TodoListItem = ({ todo, onDelete, setUpdateTodoText }) => {
               name="todo"
               todo={todo}
               onChange={setUpdateTodoText}
+              updateTodo={updateTodo}
             ></InlineTextEditor>
           </div>
 
+          <button onClick={handleClickPageBtn}>
+            <i className="more"></i>
+          </button>
           <button onClick={handleClickDeleteBtn}>
             <i className="close"></i>
           </button>

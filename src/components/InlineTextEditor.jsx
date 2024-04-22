@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./InlineTextEditor.module.css";
+import { updateData } from "../api/api";
 
-const InlineTextEditor = ({ name, onChange, ...data }) => {
+const InlineTextEditor = ({ todo, name, onChange, updateTodo }) => {
   const [inputValue, setInputValue] = useState();
   const [isDoubleClicked, setIsDoubleClicked] = useState(false);
   const [isShowAll, setIsShowAll] = useState(false);
@@ -9,7 +10,6 @@ const InlineTextEditor = ({ name, onChange, ...data }) => {
   const textarea = useRef();
 
   const handleResizeHeight = () => {
-    // console.log(textarea);
     textarea.current.style.height = "auto"; //height 초기화
     textarea.current.style.height = textarea.current.scrollHeight + "px";
   };
@@ -28,7 +28,7 @@ const InlineTextEditor = ({ name, onChange, ...data }) => {
     const value = e.target.value;
 
     setInputValue(value);
-    onChange(data.todo, value);
+    onChange(todo, value);
 
     handleResizeHeight();
   };
@@ -40,9 +40,10 @@ const InlineTextEditor = ({ name, onChange, ...data }) => {
 
   const handleInputBlur = () => {
     setIsDoubleClicked(false);
+    updateTodo(todo);
   };
 
-  const initValue = data.todo.text.split("\n").length;
+  const initValue = todo.text.split("\n").length;
 
   return (
     <>
@@ -51,7 +52,7 @@ const InlineTextEditor = ({ name, onChange, ...data }) => {
           <textarea
             type="text"
             name={name}
-            value={inputValue || data.todo.text}
+            value={inputValue || todo.text}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             className={styles.input}
@@ -61,13 +62,13 @@ const InlineTextEditor = ({ name, onChange, ...data }) => {
         ) : (
           <div onDoubleClick={handleDoubleClick} className={styles.name}>
             {isShowAll
-              ? data.todo.text.split("\n").map((line, index) => (
+              ? todo.text.split("\n").map((line, index) => (
                   <React.Fragment key={index}>
                     {line}
                     <br />
                   </React.Fragment>
                 ))
-              : data.todo.text.split("\n")[0]}
+              : todo.text.split("\n")[0]}
           </div>
         )}
         <button onClick={handleToggleBtn}>

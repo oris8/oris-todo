@@ -6,27 +6,14 @@
   height: 100px;
 }
 
-.imageLabel {
-  position: relative;
+.profileImage {
+  width: 64px;
+  height: 64px;
 
   img {
     width: 64px;
     height: 64px;
     border-radius: 50%;
-  }
-  input {
-    display: none;
-  }
-
-  button {
-    position: absolute;
-    bottom: 0;
-    right: 4px;
-    display: block;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background-color: white;
   }
 }
 

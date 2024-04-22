@@ -1,0 +1,56 @@
+.todoPageWrapper {
+  position: absolute;
+  top: 0;
+  /* right: -200px; */
+  right: 0;
+  display: none;
+}
+
+.todoPageWrapper > div {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100%); /* 오른쪽으로 이동하여 화면 밖에 위치함 */
+  }
+  100% {
+    opacity: 1;
+    right: 0;
+    transform: translateX(0); /* 오른쪽에서부터 화면 안으로 이동하여 나타남 */
+  }
+}
+
+@keyframes slideOutToRight {
+  0% {
+    opacity: 1;
+    transform: translateX(0); /* 현재 위치에서 시작함 */
+  }
+  100% {
+    opacity: 0;
+    right: -200px;
+    transform: translateX(100%); /* 오른쪽으로 이동하여 화면 밖으로 사라짐 */
+  }
+}
+
+.fade-page-enter {
+  animation: slideInFromRight 0.9s ease-in-out; /* 등장 애니메이션 적용 */
+  right: -200px;
+  display: block;
+}
+
+.fade-page-enter-done {
+  display: block;
+}
+
+.fade-page-exit {
+  animation: slideOutToRight 0.9s ease-in-out;
+}
+
+.fade-page-exit-done {
+  right: -200px;
+  display: none;
+}

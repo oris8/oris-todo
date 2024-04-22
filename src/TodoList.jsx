@@ -1,19 +1,22 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { DateContext } from "./App";
 import moment from "moment";
 import TodoListItem from "./TodoListItem";
 import { nanoid } from "nanoid";
 import styles from "./TodoList.module.css";
 import { deleteData, postData, updateData } from "./api/api";
+import TodoPage from "./components/TodoPage";
+import { CSSTransition, Transition } from "react-transition-group";
+import "./TodoPageTransition.css";
 
-const TodoList = ({ data }) => {
+const TodoList = ({ data, showPage, setShowPage }) => {
   const [todos, setTodos] = useState([]);
+  const pageRef = useRef(null);
+  const transitionRef = useRef(null);
 
   useEffect(() => {
     setTodos(data);
   }, [data]);
-
-  // console.log(todos);
 
   const { currentDate, setCurrentDate, selectedDate, setSelectedDate } =
     useContext(DateContext);
@@ -55,9 +58,24 @@ const TodoList = ({ data }) => {
       todo._id === currTodo._id ? updatedTodo : todo
     );
 
-    updateData("todos", updatedTodo);
     setTodos(updatedTodos);
   };
+  console.log(showPage, pageRef);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      console.log("click이벤트발생", event, pageRef);
+
+      if (pageRef.current && !pageRef.current.contains(event.target)) {
+        console.log("다른곳을 클릭했군요!");
+        setShowPage(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [pageRef]);
 
   return (
     <div className={styles.todoContainer}>
@@ -74,9 +92,21 @@ const TodoList = ({ data }) => {
             todo={todo}
             onDelete={handleClickDeleteBtn}
             setUpdateTodoText={setUpdateTodoText}
+            setShowPage={setShowPage}
           />
         ))}
       </div>
+
+      <CSSTransition
+        in={showPage}
+        timeout={500}
+        classNames="fade-page"
+        transitionRef={transitionRef}
+      >
+        <div className="todoPageWrapper" ref={transitionRef}>
+          <TodoPage ref={pageRef} />
+        </div>
+      </CSSTransition>
     </div>
   );
 };
