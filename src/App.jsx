@@ -1,5 +1,4 @@
 import React, { useState, createContext, useEffect } from "react";
-import axios from "axios";
 
 import TodoCalendar from "./TodoCalendar";
 import UserProfile from "./UserProfile";

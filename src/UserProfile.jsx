@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./UserProfile.module.css";
 
 import MOCK_IMAGE from "./assets/mock_user.jpeg";
@@ -17,6 +17,13 @@ const UserProfile = () => {
   });
 
   const [isDoubleClicked, setIsDoubleClicked] = useState(INIT_CLICK_STATE);
+
+  useEffect(() => {
+    initProfile();
+  }, []);
+  useEffect(() => {
+    updateProfile(profile);
+  }, [profile]);
 
   const handleInputChange = (type, e) => {
     const value = e.target.value;
@@ -37,6 +44,17 @@ const UserProfile = () => {
 
   const handleInputBlur = () => {
     setIsDoubleClicked(INIT_CLICK_STATE);
+  };
+
+  const initProfile = () => {
+    const profile = localStorage.getItem("profile");
+    if (profile) {
+      setProfile(JSON.parse(profile));
+    }
+  };
+
+  const updateProfile = (profile) => {
+    localStorage.setItem("profile", JSON.stringify(profile));
   };
 
   return (
