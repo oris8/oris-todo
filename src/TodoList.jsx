@@ -49,7 +49,7 @@ const TodoList = ({ showPage, setShowPage }) => {
 
   const handleClickAddBtn = () => {
     const newTodo = {
-      _id: nanoid(),
+      // _id: nanoid(),
       user: userIP,
       text: "할 일을 입력해주세요",
       date: formattedSelectedDate,
@@ -130,7 +130,7 @@ const TodoList = ({ showPage, setShowPage }) => {
             setToggleAndUpdateTodoFinished={setToggleAndUpdateTodoFinished}
           />
         ))}
-        {(currentDate !== selectedDate || !selectedDate) && (
+        {selectedDate && currentDate !== selectedDate && (
           <button onClick={updateTodoCurrentDate}>
             못한 할일 오늘로 옮기기
           </button>

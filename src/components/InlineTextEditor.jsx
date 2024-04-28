@@ -71,9 +71,11 @@ const InlineTextEditor = ({ todo, name, onChange, updateTodo }) => {
               : todo.text.split("\n")[0]}
           </div>
         )}
-        <button onClick={handleToggleBtn}>
-          <i className="arrow-dropdown"></i>
-        </button>
+        {(inputValue || todo.text).includes("\n") && (
+          <button onClick={handleToggleBtn}>
+            <i className="arrow-dropdown"></i>
+          </button>
+        )}
       </div>
     </>
   );

@@ -5,9 +5,10 @@ import DateContext from "./context/DateContext";
 import moment from "moment";
 import Calendar from "react-calendar";
 
+import getFormattedDate from "./utils/getFormattedDate";
+
 import "./Calendar.css";
 import "./TodoCalendar.module.css";
-import getFormattedDate from "./utils/getFormattedDate";
 
 const TodoCalendar = () => {
   const { selectedDate, setSelectedDate } = useContext(DateContext);
