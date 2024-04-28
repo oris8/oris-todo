@@ -1,18 +1,21 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
+
+import DateContext from "./context/DateContext";
+
 import moment from "moment";
 import Calendar from "react-calendar";
+
 import "./Calendar.css";
 import "./TodoCalendar.module.css";
-import { DateContext } from "./App";
+import getFormattedDate from "./utils/getFormattedDate";
 
 const TodoCalendar = () => {
-  const { currentDate, setCurrentDate, selectedDate, setSelectedDate } =
-    useContext(DateContext);
+  const { selectedDate, setSelectedDate } = useContext(DateContext);
 
   return (
     <div>
       <Calendar
-        onChange={(date) => setSelectedDate(date)}
+        onChange={(date) => setSelectedDate(getFormattedDate(date))}
         value={selectedDate}
         calendarType="gregory"
         // onClickDay={(e) => setSelectedDate(e)}

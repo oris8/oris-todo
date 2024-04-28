@@ -1,38 +1,55 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+
+import DateContext from "./context/DateContext";
+import UserContext from "./context/UserContext";
 
 import TodoCalendar from "./TodoCalendar";
 import UserProfile from "./UserProfile";
 import TodoList from "./TodoList";
 
-import "./App.css";
 import { fetchData } from "./api/api";
+import getClientIP from "./utils/getClientIP";
 
-export const DateContext = createContext();
+import getFormattedDate from "./utils/getFormattedDate";
+
+import "./App.css";
 
 function App() {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(getFormattedDate(new Date()));
   const [selectedDate, setSelectedDate] = useState(null);
 
-  const [data, setData] = useState([]);
-
   const [showPage, setShowPage] = useState(false);
+
+  const [userIP, setUserIP] = useState("");
+
   useEffect(() => {
-    fetchData(setData, "todos");
+    const fetchUserIP = async () => {
+      try {
+        const ip = await getClientIP();
+        setUserIP(ip);
+      } catch (error) {
+        console.error("Error fetching IP address:", error);
+      }
+    };
+
+    fetchUserIP();
   }, []);
 
   return (
     <DateContext.Provider
       value={{ currentDate, setCurrentDate, selectedDate, setSelectedDate }}
     >
-      <div className="container">
-        <div>
-          <UserProfile />
-          <TodoCalendar />
+      <UserContext.Provider value={userIP}>
+        <div className="container">
+          <div>
+            <UserProfile />
+            <TodoCalendar />
+          </div>
+          <div>
+            <TodoList showPage={showPage} setShowPage={setShowPage} />
+          </div>
         </div>
-        <div>
-          <TodoList data={data} showPage={showPage} setShowPage={setShowPage} />
-        </div>
-      </div>
+      </UserContext.Provider>
     </DateContext.Provider>
   );
 }

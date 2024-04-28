@@ -26,7 +26,7 @@ export async function postData(link, data) {
 
 export async function updateData(link, data) {
   const id = data._id;
-  console.log(id, "업데이트중");
+  console.log(data, id, "업데이트중");
   try {
     // PUT 또는 PATCH 요청을 사용하여 특정 할 일의 내용을 업데이트합니다.
     const response = await axios.patch(

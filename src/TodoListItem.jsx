@@ -4,15 +4,20 @@ import styles from "./TodoListItem.module.css";
 import Label from "./components/Label";
 import { updateData } from "./api/api";
 
-const TodoListItem = ({ todo, onDelete, setShowPage, setUpdateTodoText }) => {
-  const [isFinished, setIsFinished] = useState(false);
-
+const TodoListItem = ({
+  todo,
+  onDelete,
+  setShowPage,
+  setUpdateTodoText,
+  setToggleAndUpdateTodoFinished,
+}) => {
   const handleClickDeleteBtn = () => {
     onDelete(todo._id);
   };
 
   const handleClickCheckBox = () => {
-    setIsFinished((prevState) => !prevState);
+    setToggleAndUpdateTodoFinished(todo, todo.isFinished);
+    //update 함수로 db에 없데이트
   };
 
   const tags = todo.tags;
@@ -25,12 +30,14 @@ const TodoListItem = ({ todo, onDelete, setShowPage, setUpdateTodoText }) => {
     setShowPage(true);
   };
 
+  // console.log(todo);
+
   return (
     <>
       <div>
         <div className={styles.todo}>
           <button onClick={handleClickCheckBox}>
-            {isFinished ? (
+            {todo.isFinished ? (
               <i className="checkbox-fill"></i>
             ) : (
               <i className="checkbox"></i>
